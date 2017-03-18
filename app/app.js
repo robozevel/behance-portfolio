@@ -34,21 +34,40 @@ window.app = new Vue({
   el: '#gallery',
   data: {
     items: [],
+    gallery: null,
   },
   methods: {
+    openImage: function(item, event) {
+      let parentNode = event.currentTarget.parentNode;
+      this.gallery = new PhotoSwipe(document.querySelector('.pswp'), PhotoSwipeUI_Default, this.items, {
+        index: this.items.indexOf(item),
+        getThumbBoundsFn: function(index) {
+          let thumbnail = parentNode.children[index];
+          let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
+          let rect = thumbnail.getBoundingClientRect();
+          return { x: rect.left, y: rect.top + pageYScroll, w: rect.width }
+        },
+        captionEl: false,
+        fullscreenEl: false,
+        history: false,
+        shareEl: false,
+        tapToClose: true
+      });
+
+      this.gallery.init();
+    },
     loadProject: function(res) {
       res.project.modules.forEach(module => {
         if (module.type !== 'image') return;
         this.items.push({
           src: module.src,
           original: module.url,
-          width: module.width,
-          height: module.height
+          w: module.width,
+          h: module.height
         });
       });
     },
     loadProjects: function(res) {
-      console.log(res.projects)
       res.projects.filter(project => ~project.fields.indexOf('Illustration')).forEach(project => {
         api('projects/' + project.id, app.loadProject); 
       });
