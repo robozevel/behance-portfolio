@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <title>Racheli Tzairi \\ Illustrator \\ Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="charset" content="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Heebo:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>Racheli Tzairi \\ Illustrator</h2>
+    </div>
+  </header>
+
+  <section id="gallery">
+    <div class="columns">
+      <img class="item" v-for="item in items" v-bind:src="item.src">
+    </div>
+  </section>
+
+  <script src="app.js" async></script>
+
+  </body>
+</html>
