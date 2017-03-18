@@ -45,7 +45,13 @@ window.app = new Vue({
           let thumbnail = parentNode.children[index];
           let pageYScroll = window.pageYOffset || document.documentElement.scrollTop
           let rect = thumbnail.getBoundingClientRect();
-          return { x: rect.left, y: rect.top + pageYScroll, w: rect.width }
+          let style = window.getComputedStyle(thumbnail);
+          let padding = parseInt(style.getPropertyValue('padding'))
+          return {
+            x: rect.left + padding,
+            y: rect.top + pageYScroll + padding,
+            w: rect.width - padding * 2
+          };
         },
         captionEl: false,
         fullscreenEl: false,
